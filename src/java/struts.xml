@@ -15,5 +15,15 @@
         <action name="insertarPelicula" class="com.videosw.renta.application.action.InsertarPeliculaAction">
             <result name="input" type="dispatcher">insertarPelicula.jsp</result>
         </action> 
+        <action name="insertarPeliculaInit" class="com.videosw.renta.application.action.InsertarPeliculaAction">
+            <interceptor-ref name="defaultStack">
+                <param name="validation.excludemethods">execute</param>
+            </interceptor-ref>
+        </action> 
+        <action name="insertarPeliculaProcess" method="insertar" class="com.videosw.renta.application.action.InsertarPeliculaAction">
+            <result name="input" type="dispatcher">insertarPelicula.jsp</result>
+            <result name="success" type="dispatcher">exito.jsp</result>
+            <result name="error" type="dispatcher">error.jsp</result>
+        </action> 
     </package>
 </struts>

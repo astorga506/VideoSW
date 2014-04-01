@@ -7,11 +7,13 @@ package com.videosw.renta.data;
 
 import com.videosw.renta.domain.Actor;
 import com.videosw.renta.domain.Pelicula;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.sql.Types;
 
 /**
  *
@@ -80,4 +82,27 @@ public class PeliculaData extends BaseData {
         
         return actores;
     }//getActores
+    
+    public Pelicula insertar(Pelicula pelicula) throws SQLException{
+    
+        String sqlInsert = "{CALL InsertarPelicula(?,?,?,?,?,?)}";
+        Connection conexion = this.getConnection();
+        CallableStatement statement = conexion.prepareCall(sqlInsert);
+        
+        statement.registerOutParameter(1, Types.INTEGER);
+        statement.setString(2, pelicula.getTitulo());
+        statement.setInt(3, pelicula.getGenero().getCodGenero());
+        statement.setInt(4, pelicula.getTotalPeliculas());
+        statement.setBoolean(5, pelicula.isSubtitulada());
+        statement.setBoolean(6, pelicula.isEstreno());
+        
+        statement.executeUpdate();
+        
+        pelicula.setCodPelicula(statement.getInt(1));
+        
+        conexion.close();
+    
+        return pelicula;
+    }
 }
+

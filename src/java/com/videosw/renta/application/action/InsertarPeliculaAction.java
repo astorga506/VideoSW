@@ -10,8 +10,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import com.videosw.renta.business.GeneroBusiness;
+import com.videosw.renta.business.PeliculaBusiness;
 import com.videosw.renta.domain.Genero;
 import com.videosw.renta.domain.Pelicula;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 /**
@@ -27,7 +29,25 @@ public class InsertarPeliculaAction extends ActionSupport implements Preparable,
     public String execute() throws Exception {
         return INPUT;
     }
+    
+    public String insertar() throws SQLException {
+        PeliculaBusiness peliculaBusiness = new PeliculaBusiness();
+        peliculaBusiness.insertar(peliculaInsertar);
+        
+        return SUCCESS;    
+    }
 
+    @Override
+    public void validate() {
+        if(peliculaInsertar.getTitulo().length() == 0 || peliculaInsertar.getTitulo().equals(null)){
+            addFieldError("titulo", "Debe de ingresar un titulo");
+        }
+        
+        if(peliculaInsertar.getTotalPeliculas() < 0){
+            addFieldError("totalPeliculas", "La cantidad de películas debe ser superior a 0");
+        }
+    }
+    
     @Override
     public void prepare() throws Exception {
         GeneroBusiness generoBusiness = new GeneroBusiness();

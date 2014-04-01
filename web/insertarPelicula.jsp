@@ -12,9 +12,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Inserci&oacute;n de pel&iacute;cula</title>
+        <s:head/>
     </head>
     <body>
-        <div style="font-family: sans-serif;font-size: larger; font-weight: bold">
+        <div style="font-family: sans-serif; font-size: larger; font-weight: bold">
             Inserci&oacute;n de pel&iacute;cula   
         </div>
         <s:form action="insertarPeliculaProcess" method="get">

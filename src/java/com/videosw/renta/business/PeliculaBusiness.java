@@ -31,5 +31,8 @@ public class PeliculaBusiness {
         return this.peliculaData.getActores(codPelicula);
     }
         
+    public Pelicula insertar(Pelicula pelicula) throws SQLException{
+        return this.peliculaData.insertar(pelicula);
+    }
     
 }
