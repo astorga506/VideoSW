@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 
-package com.videosw.renta.action;
+package com.videosw.renta.application.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
-import com.sun.corba.se.spi.presentation.rmi.StubAdapter;
 import com.videosw.renta.business.PeliculaBusiness;
 import com.videosw.renta.domain.Genero;
 import com.videosw.renta.domain.Pelicula;

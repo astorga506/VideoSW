@@ -6,7 +6,6 @@
 package com.videosw.renta.data;
 
 import com.videosw.renta.domain.Actor;
-import com.videosw.renta.domain.Genero;
 import com.videosw.renta.domain.Pelicula;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

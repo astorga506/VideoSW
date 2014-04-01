@@ -6,11 +6,14 @@
     <include file="example.xml"/>
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default" namespace="/">
-        <action name="verPeliculas" class="com.videosw.renta.action.VerPeliculasAction">
+        <action name="verPeliculas" class="com.videosw.renta.application.action.VerPeliculasAction">
             <result name="success" type="dispatcher">verPeliculas.jsp</result>
         </action> 
-        <action name="mostrarPelicula" method="mostrar" class="com.videosw.renta.action.VerPeliculasAction">
+        <action name="mostrarPelicula" method="mostrar" class="com.videosw.renta.application.action.VerPeliculasAction">
             <result name="success" type="dispatcher">mostrarPelicula.jsp</result>
+        </action> 
+        <action name="insertarPelicula" class="com.videosw.renta.application.action.InsertarPeliculaAction">
+            <result name="input" type="dispatcher">insertarPelicula.jsp</result>
         </action> 
     </package>
 </struts>
