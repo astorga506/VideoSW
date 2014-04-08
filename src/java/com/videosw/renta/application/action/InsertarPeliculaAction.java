@@ -24,17 +24,29 @@ public class InsertarPeliculaAction extends ActionSupport implements Preparable,
     
     private LinkedList<Genero> generos;
     private Pelicula peliculaInsertar;//recolector de los datos que vienen del navegador
+    private String mensaje;
 
     @Override
-    public String execute() throws Exception {
+    public String execute() throws Exception {        
         return INPUT;
     }
     
-    public String insertar() throws SQLException {
-        PeliculaBusiness peliculaBusiness = new PeliculaBusiness();
-        peliculaBusiness.insertar(peliculaInsertar);
-        
-        return SUCCESS;    
+    public String insertar(){
+        PeliculaBusiness peliculaBusiness = new PeliculaBusiness();  
+        boolean insertado = true;
+        try{
+            peliculaBusiness.insertar(peliculaInsertar);
+        }catch(SQLException e){
+            e.getErrorCode();
+            insertado = false;
+            mensaje = "Ocurrió un erro conla base de datos. Inténtelo nuevamente. Si el error persiste contacte al adimistrador del sistema";
+        }
+        if(insertado){
+            this.mensaje = "La película se insertó correctamente";
+            return SUCCESS;
+        }else {
+            return ERROR;
+        }
     }
 
     @Override
@@ -53,6 +65,7 @@ public class InsertarPeliculaAction extends ActionSupport implements Preparable,
         GeneroBusiness generoBusiness = new GeneroBusiness();
         generos = generoBusiness.getGeneros();
         peliculaInsertar = new Pelicula();
+        mensaje = "";
     }
 
     @Override
@@ -71,5 +84,8 @@ public class InsertarPeliculaAction extends ActionSupport implements Preparable,
     public void setPeliculaInsertar(Pelicula peliculaInsertar) {
         this.peliculaInsertar = peliculaInsertar;
     }
-    
+
+    public String getMensaje() {
+        return mensaje;
+    }
 }

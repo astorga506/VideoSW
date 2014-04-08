@@ -59,50 +59,72 @@ public class PeliculaData extends BaseData {
 
     public LinkedList<Actor> getActores(int codPelicula) throws SQLException {
         String sqlSelect = "SELECT a.cod_actor,a.nombre_actor,a.apellidos_actor"
-                            + " FROM Actor a, Pelicula_Actor p"
-                            + " WHERE a.cod_actor = p.cod_actor AND p.cod_pelicula =?"
-                            + " ORDER BY a.nombre_actor";
+                + " FROM Actor a, Pelicula_Actor p"
+                + " WHERE a.cod_actor = p.cod_actor AND p.cod_pelicula =?"
+                + " ORDER BY a.nombre_actor";
         Connection conexion = this.getConnection();
         PreparedStatement statement = conexion.prepareStatement(sqlSelect);
         statement.setInt(1, codPelicula);
         ResultSet resultSet = statement.executeQuery();
-        
+
         LinkedList<Actor> actores = new LinkedList<Actor>();
-        while(resultSet.next()){
+        while (resultSet.next()) {
             Actor actor = new Actor();
-            
+
             actor.setCodActor(resultSet.getInt("cod_actor"));
             actor.setNombreActor(resultSet.getString("nombre_actor"));
             actor.setApellidosActor(resultSet.getString("apellidos_actor"));
-            
+
             actores.add(actor);
         }
-        
+
         conexion.close();
-        
+
         return actores;
     }//getActores
-    
-    public Pelicula insertar(Pelicula pelicula) throws SQLException{
-    
+
+    public Pelicula insertar(Pelicula pelicula) throws SQLException {
+
         String sqlInsert = "{CALL InsertarPelicula(?,?,?,?,?,?)}";
         Connection conexion = this.getConnection();
         CallableStatement statement = conexion.prepareCall(sqlInsert);
-        
+
         statement.registerOutParameter(1, Types.INTEGER);
         statement.setString(2, pelicula.getTitulo());
         statement.setInt(3, pelicula.getGenero().getCodGenero());
         statement.setInt(4, pelicula.getTotalPeliculas());
         statement.setBoolean(5, pelicula.isSubtitulada());
         statement.setBoolean(6, pelicula.isEstreno());
-        
+
         statement.executeUpdate();
-        
+
         pelicula.setCodPelicula(statement.getInt(1));
-        
+
         conexion.close();
-    
+
         return pelicula;
     }
-}
 
+    public void eliminar(int codPelicula) throws SQLException {
+        String sqlDeletePeliculaActor = "DELETE FROM Pelicula_Actor "
+                                         + "WHERE cod_pelicula=?";
+        String sqlDeletePelicula = "DELETE FROM Pelicula "
+                                    + "WHERE cod_pelicula=?";
+        Connection conexion = this.getConnection();
+        conexion.setAutoCommit(false);
+        try {
+            PreparedStatement stmtPeliculaActor = conexion.prepareStatement(sqlDeletePelicula);
+            stmtPeliculaActor.setInt(1, codPelicula);
+            PreparedStatement stmtPelicula = conexion.prepareStatement(sqlDeletePelicula);
+            stmtPelicula.setInt(1, codPelicula);
+            stmtPeliculaActor.executeUpdate();
+            stmtPelicula.executeUpdate();
+            conexion.commit();
+        }catch(SQLException e){
+            conexion.rollback();
+            throw e;
+        }finally{
+                conexion.close();
+        }        
+    }
+}

@@ -27,4 +27,12 @@ public class GeneroBusiness {
         return generoData.getGeneros();        
     }
     
+    public void editar(Genero genero) throws SQLException {
+        generoData.editar(genero);
+    }
+    
+    public void eliminar(int codGenero) throws SQLException{
+        generoData.eliminar(codGenero);
+    }
+    
 }
