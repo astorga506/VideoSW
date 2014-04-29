@@ -6,6 +6,7 @@
 package com.videosw.renta.data;
 
 import com.videosw.renta.domain.Genero;
+import com.videosw.renta.exceptions.GeneroNoExisteException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,6 +62,26 @@ public class GeneroData extends BaseData {
         conexion.close();
 
         return generos;
+    }
+
+    public Genero getGenero(int codGenero) throws SQLException, GeneroNoExisteException {
+        String sqlSelect = "{CALL GetGenero(?)}";
+        Connection con = this.getConnection();
+        CallableStatement stmt = con.prepareCall(sqlSelect);
+        stmt.setInt(1, codGenero);
+        ResultSet result = stmt.executeQuery();
+
+        Genero genero = new Genero();
+        if (result.next()) {            
+            genero.setCodGenero(result.getInt("cod_genero"));
+            genero.setNombreGenero(result.getString("nombre_genero"));
+        } else {
+                throw new GeneroNoExisteException();
+        }
+
+        con.close();
+
+        return genero;
     }
 
 }

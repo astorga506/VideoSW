@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,30 +24,30 @@
     </head>
     <body>
         <h1>Mantenimiento de G&eacute;neros</h1>
-        <table> 
+        <table>
             <tr>
-                <td>C&oacute;digo<td/>
-                <td>Nombre<td/>
-                <td colspan="2">Acciones<td/>
+                <td>C&oacute;digo</td>
+                <td>Nombre</td>
+                <td colspan="2">Acciones</td>
             </tr>
             <s:iterator value="generos" var="generoActual">
                 <tr>
-                    <td><s:property value="#generoActual.codGenero"/><td/>
-                    <td><s:property value="#generoActual.nombreGenero"/><td/>
-                        <td>
-                            <s:url action="editarGenero.action" var="url">
-                                <s:param name="codGenero" value="#generoActual.codGenero"/>
-                                <a href="<s:property value="#url"/>">editar</a>
-                            </s:url>
-                        <td/>
-                        <td>
-                            <s:url action="eliminarGenero.action" var="url">
-                                <s:param name="codGenero" value="#generoActual.codGenero"/>
-                                <a class="button" href="<s:property value="#url"/>">eliminar</a>
-                            </s:url>
-                        <td/>
+                    <td><s:property value="#generoActual.codGenero"/></td>
+                    <td><s:property value="#generoActual.nombreGenero"/></td>
+                    <td>
+                        <s:url action="editarGenero.action" var="url">
+                            <s:param name="codGenero" value="#generoActual.codGenero"/>
+                        </s:url>
+                        <a href="<s:property value="#url"/>">editar</a>
+                    </td>
+                    <td>
+                        <s:url action="eliminarGenero.action" var="url">
+                            <s:param name="codGenero" value="#generoActual.codGenero"/>
+                        </s:url>
+                        <a class="button" href="<s:property value="#url"/>">eliminar</a>
+                    </td>
                 </tr>                
             </s:iterator>
-        <table/>
+        </table>
     </body>
 </html>

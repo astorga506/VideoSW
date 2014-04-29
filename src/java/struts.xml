@@ -29,5 +29,17 @@
         <action name="mantenerGeneros" class="com.videosw.renta.application.action.MentenerGenerosAction">
             <result name="success">mantenerGeneros.jsp</result>
         </action>
+        <action name="editarGenero" class="com.videosw.renta.application.action.EditarGeneroAction">
+            <interceptor-ref name="defaultStack">
+                <param name="validation.excludemethods">execute</param>                
+            </interceptor-ref>
+            <result name="input" type="dispatcher">editarGenero.jsp</result>
+            <result name="error" type="dispatcher">error.jsp</result>
+        </action> 
+        <action name="editarGeneroProcess" method="editar" class="com.videosw.renta.application.action.EditarGeneroAction">
+            <result name="input" type="dispatcher">editarGenero.jsp</result>
+            <result name="error" type="dispatcher">error.jsp</result>
+            <result name="success" type="dispatcher">exito.jsp</result>
+        </action> 
     </package>
 </struts>

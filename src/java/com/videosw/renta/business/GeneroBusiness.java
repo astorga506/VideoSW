@@ -8,6 +8,7 @@ package com.videosw.renta.business;
 
 import com.videosw.renta.data.GeneroData;
 import com.videosw.renta.domain.Genero;
+import com.videosw.renta.exceptions.GeneroNoExisteException;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
@@ -33,6 +34,10 @@ public class GeneroBusiness {
     
     public void eliminar(int codGenero) throws SQLException{
         generoData.eliminar(codGenero);
+    }
+    
+    public Genero getGenero(int codGenero) throws SQLException, GeneroNoExisteException{
+        return generoData.getGenero(codGenero);
     }
     
 }
